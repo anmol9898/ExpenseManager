@@ -1,23 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import {useState} from 'react';
+import Expenses from "./Components/Expenses/Expenses";
+import React from "react";
+import NewExpense from "./Components/NewExpense/NewExpense";
 
-function App() {
+const DUMMY_EXPENSES = [
+  { date: new Date(2021, 11, 19), title: "Car insurance 1", price: 4000 },
+  { date: new Date(2021, 5, 20), title: "Food", price: 3000 },
+  { date: new Date(2021, 6, 21), title: "Misc", price: 200 },
+  { date: new Date(2021, 0, 22), title: "Work", price: 5000 },
+];
+
+const App=()=> {
+
+  const [expenses,setExpenses] =useState(DUMMY_EXPENSES);
+ 
+
+  const addExpenseHandler=(expense)=>{
+
+    setExpenses((prevExpenses)=>{
+      return [expense, ...prevExpenses];
+    });
+    console.log("expense in app.js",expense);
+   
+  }
+  
+
+  
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <NewExpense onAddExpense={addExpenseHandler}></NewExpense>
+      <Expenses exp={expenses} />
     </div>
   );
 }
